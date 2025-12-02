@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Depression Detection System</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        min-height: 100vh;
+        padding: 20px 0;
+      }
+      .main-container {
+        background: white;
+        border-radius: 15px;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+        padding: 40px;
+        margin: 20px auto;
+        max-width: 900px;
+      }
+      .form-section {
+        margin-bottom: 30px;
+        padding: 25px;
+        background: #f8f9fa;
+        border-radius: 10px;
+        border-left: 4px solid #667eea;
+      }
+      .form-section h3 {
+        color: #667eea;
+        margin-bottom: 20px;
+        font-size: 1.3rem;
+        font-weight: 600;
+      }
+      .form-label {
+        font-weight: 500;
+        color: #495057;
+        margin-bottom: 8px;
+      }
+      .btn-primary {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        border: none;
+        padding: 12px 40px;
+        font-size: 1.1rem;
+        font-weight: 600;
+        border-radius: 8px;
+        transition: transform 0.2s;
+      }
+      .btn-primary:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
+      }
+      h1 {
+        color: #2d3748;
+        font-weight: 700;
+        margin-bottom: 10px;
+      }
+      .subtitle {
+        color: #718096;
+        font-size: 1.1rem;
+        margin-bottom: 30px;
+      }
+      .alert-info {
+        background: #e6f3ff;
+        border-color: #667eea;
+        color: #2c5282;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="main-container">
+        <div class="text-center mb-4">
+          <h1>🧠 Depression Detection System</h1>
+          <p class="subtitle">
+            Based on PHQ-9 Questionnaire & Lifestyle Factors
+          </p>
+        </div>
+
+        <div class="alert alert-info" role="alert">
+          <strong>Note:</strong> This tool is for screening purposes only and
+          should not replace professional medical advice. Please consult a
+          healthcare provider for proper diagnosis and treatment.
+        </div>
+
+        <form method="post" action="{% url 'predictor:home' %}">
+          {% csrf_token %}
+
+          <!-- PHQ-9 Questionnaire Section -->
+          <div class="form-section">
+            <h3>📋 PHQ-9 Depression Questionnaire</h3>
+            <p class="text-muted mb-3">
+              Please answer how often you've experienced the following over the
+              last two weeks:
+            </p>
+
+            <div class="row">
+              <div class="col-md-12 mb-3">
+                <label class="form-label">{{ form.q1_interest.label }}</label>
+                {{ form.q1_interest }}
+              </div>
+              <div class="col-md-12 mb-3">
+                <label class="form-label">{{ form.q2_depressed.label }}</label>
+                {{ form.q2_depressed }}
+              </div>
+              <div class="col-md-12 mb-3">
+                <label class="form-label">{{ form.q3_sleep.label }}</label>
+                {{ form.q3_sleep }}
+              </div>
+              <div class="col-md-12 mb-3">
+                <label class="form-label">{{ form.q4_energy.label }}</label>
+                {{ form.q4_energy }}
+              </div>
+              <div class="col-md-12 mb-3">
+                <label class="form-label">{{ form.q5_appetite.label }}</label>
+                {{ form.q5_appetite }}
+              </div>
+              <div class="col-md-12 mb-3">
+                <label class="form-label">{{ form.q6_selfworth.label }}</label>
+                {{ form.q6_selfworth }}
+              </div>
+              <div class="col-md-12 mb-3">
+                <label class="form-label">{{ form.q7_focus.label }}</label>
+                {{ form.q7_focus }}
+              </div>
+              <div class="col-md-12 mb-3">
+                <label class="form-label">{{ form.q8_activity.label }}</label>
+                {{ form.q8_activity }}
+              </div>
+              <div class="col-md-12 mb-3">
+                <label class="form-label">{{ form.q9_suicidal.label }}</label>
+                {{ form.q9_suicidal }}
+              </div>
+            </div>
+          </div>
+
+          <!-- Demographic Information Section -->
+          <div class="form-section">
+            <h3>👤 Demographic Information</h3>
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <label class="form-label">{{ form.age.label }}</label>
+                {{ form.age }}
+              </div>
+              <div class="col-md-6 mb-3">
+                <label class="form-label">{{ form.gender.label }}</label>
+                {{ form.gender }}
+              </div>
+            </div>
+          </div>
+
+          <!-- Employment & Work Section -->
+          <div class="form-section">
+            <h3>💼 Employment & Work</h3>
+            <div class="row">
+              <div class="col-md-12 mb-3">
+                <label class="form-label"
+                  >{{ form.employment_status.label }}</label
+                >
+                {{ form.employment_status }}
+              </div>
+              <div class="col-md-12 mb-3">
+                <label class="form-label"
+                  >{{ form.job_satisfaction.label }}</label
+                >
+                {{ form.job_satisfaction }}
+              </div>
+              <div class="col-md-12 mb-3">
+                <label class="form-label">{{ form.study_hours.label }}</label>
+                {{ form.study_hours }}
+              </div>
+              <div class="col-md-12 mb-3">
+                <label class="form-label">{{ form.work_stress.label }}</label>
+                {{ form.work_stress }}
+              </div>
+            </div>
+          </div>
+
+          <!-- Lifestyle Factors Section -->
+          <div class="form-section">
+            <h3>🏃 Lifestyle Factors</h3>
+            <div class="row">
+              <div class="col-md-12 mb-3">
+                <label class="form-label"
+                  >{{ form.sleep_duration.label }}</label
+                >
+                {{ form.sleep_duration }}
+              </div>
+              <div class="col-md-12 mb-3">
+                <label class="form-label">{{ form.diet_quality.label }}</label>
+                {{ form.diet_quality }}
+              </div>
+              <div class="col-md-12 mb-3">
+                <label class="form-label"
+                  >{{ form.financial_stress.label }}</label
+                >
+                {{ form.financial_stress }}
+              </div>
+            </div>
+          </div>
+
+          <!-- Medical History Section -->
+          <div class="form-section">
+            <h3>🏥 Medical History</h3>
+            <div class="row">
+              <div class="col-md-12 mb-3">
+                <label class="form-label"
+                  >{{ form.family_history.label }}</label
+                >
+                {{ form.family_history }}
+              </div>
+              <div class="col-md-12 mb-3">
+                <label class="form-label"
+                  >{{ form.selfharm_history.label }}</label
+                >
+                {{ form.selfharm_history }}
+              </div>
+            </div>
+          </div>
+
+          <div class="text-center mt-4">
+            <button type="submit" class="btn btn-primary btn-lg">
+              Get Depression Assessment
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  </body>
+</html>
