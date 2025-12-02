@@ -23,9 +23,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = "django-insecure-4&(_)y*vlrxd7!=h4%^*lvip!_8ta3p)8zf*w#2vwhov+6_1ie"
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["depression-analyze.onrender.com", "localhost",  "*"]
 
 
 # Application definition
